@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
@@ -12,26 +12,38 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./registro.css'],
 })
 export class RegistroComponent {
-  form: any;
-  constructor(private fb: FormBuilder, private router: Router, private authService: AuthService) {
+  form: FormGroup;
+  loading = false;
+
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private authService: AuthService
+  ) {
     this.form = this.fb.group({
-      nombre: ['', Validators.required],
-      apellido: ['', Validators.required],
-      username: ['', Validators.required],
-      password: ['', Validators.required],
+      nombre: ['', [Validators.required, Validators.minLength(2)]],
+      apellido: ['', [Validators.required, Validators.minLength(2)]],
+      username: ['', [Validators.required, Validators.minLength(4)]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
 
   onSubmit() {
-    if (this.form.invalid) return;
+    if (this.form.invalid) {
+      alert('⚠️ Por favor completa todos los campos correctamente');
+      return;
+    }
 
+    this.loading = true;
     this.authService.register(this.form.value).subscribe({
       next: (res) => {
-        alert(res.msg);
+        alert(res.message || '✅ Usuario registrado con éxito');
         this.router.navigateByUrl('/login');
+        this.loading = false;
       },
       error: (err) => {
-        alert(err.error?.msg || '❌ Error al registrar usuario');
+        alert(err.error?.error || '❌ Error al registrar usuario');
+        this.loading = false;
       },
     });
   }

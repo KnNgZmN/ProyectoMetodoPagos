@@ -14,7 +14,8 @@
     <label>Contraseña</label>
     <input formControlName="password" type="password" />
 
-    <button [disabled]="form.invalid">Crear cuenta</button>
+    <button type="submit" [disabled]="form.invalid">Crear cuenta</button>
+
   </form>
 
   <p class="muted">

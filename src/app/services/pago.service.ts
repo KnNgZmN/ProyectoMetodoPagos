@@ -1,17 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PagoService {
-  private apiUrl = 'http://localhost:8080/api/payments'; // Node + TS + Atlas
+  private apiUrl = environment.apiUrl; // Node + TS + Atlas
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   crearOrden(monto: number) {
-    return this.http.post<any>('http://localhost:8080/api/paypal/create-order', { amount: monto });
+    return this.http.post<any>(`${this.apiUrl}/paypal/create-order`, { amount: monto });
   }
 
   capturarPago(
@@ -22,7 +23,7 @@ export class PagoService {
     producto: string,
     metodo: string
   ): Observable<any> {
-    return this.http.post<any>('http://localhost:8080/api/paypal/capture-order', {
+    return this.http.post<any>(`${this.apiUrl}/paypal/capture-order`, {
       orderId,
       usuario,
       nombre,
@@ -33,10 +34,10 @@ export class PagoService {
   }
 
   guardarPago(body: any) {
-    return this.http.post<any>('http://localhost:8080/api/paypal', body);
+    return this.http.post<any>(`${this.apiUrl}/paypal`, body);
   }
 
   obtenerPagos(): Observable<any> {
-    return this.http.get(this.apiUrl);
+    return this.http.get(`${this.apiUrl}/payments`);
   }
 }

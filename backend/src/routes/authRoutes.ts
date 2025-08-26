@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import usuario from '../models/usuario';
+import jwt from 'jsonwebtoken';
 
 const router = Router();
 
@@ -8,22 +9,34 @@ router.post('/login', async (req, res): Promise<void> => {
   try {
     const { username, password } = req.body;
 
-    const user = await usuario.findOne({ username });
+    const user: any = await usuario.findOne({ username });
     if (!user) {
       res.status(401).json({ msg: 'Usuario no encontrado' });
       return;
     }
 
-    // 🚨 En un proyecto real: compara password con bcrypt
-    if (user?.password !== password) {
+    // ✅ Comparar password hasheada
+    const isMatch = await user.comparePassword(password);
+    if (!isMatch) {
       res.status(401).json({ msg: 'Contraseña incorrecta' });
       return;
     }
 
+    // ✅ Generar token JWT
+    const token = jwt.sign(
+      { id: user._id, username: user.username },
+      process.env['JWT_SECRET'] || 'secret_key',
+      { expiresIn: '2h' }
+    );
+
     res.json({
-      username: user?.username,
-      nombre: user?.nombre,
-      apellido: user?.apellido,
+      msg: '✅ Login exitoso',
+      token,
+      user: {
+        username: user.username,
+        nombre: user.nombre,
+        apellido: user.apellido,
+      },
     });
   } catch (err) {
     res.status(500).json({ msg: 'Error en login', error: err });
@@ -42,7 +55,7 @@ router.post('/register', async (req, res): Promise<void> => {
       return;
     }
 
-    // Crear nuevo usuario (⚡ en un proyecto real deberías encriptar la password con bcrypt)
+    // ✅ La contraseña se hashea automáticamente gracias al pre('save')
     const newUser = new usuario({ nombre, apellido, username, password });
     await newUser.save();
 
@@ -54,10 +67,8 @@ router.post('/register', async (req, res): Promise<void> => {
         apellido: newUser.apellido,
       },
     });
-    return;
   } catch (err) {
     res.status(500).json({ msg: 'Error en registro', error: err });
-    return;
   }
 });
 

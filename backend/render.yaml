@@ -1,0 +1,32 @@
+services:
+  # 🚀 Backend (Express + TS)
+  - type: web
+    name: backend-pagos
+    env: node
+    plan: free
+    rootDir: backend
+    buildCommand: "npm install && npm run build"
+    startCommand: "npm start"
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 8080
+      - key: MONGO_URI
+        sync: false   # 🔐 Se agregará manualmente en Render Dashboard
+      - key: PAYPAL_CLIENT_ID
+        sync: false   # 🔐 Se agregará manualmente
+      - key: PAYPAL_CLIENT_SECRET
+        sync: false   # 🔐 Se agregará manualmente
+
+  # 🎨 Frontend (Angular)
+  - type: web
+    name: frontend-pagos
+    env: static
+    plan: free
+    rootDir: frontend
+    buildCommand: "npm install && npm run build"
+    staticPublishPath: "dist/frontend"
+    envVars:
+      - key: NODE_ENV
+        value: production

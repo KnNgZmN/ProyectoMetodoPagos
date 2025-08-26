@@ -8,7 +8,8 @@
     <label>Contraseña</label>
     <input formControlName="password" type="password" placeholder="********" />
 
-    <button [disabled]="form.invalid">Ingresar</button>
+    <button type="submit" [disabled]="form.invalid">Ingresar</button>
+
   </form>
 
   <p class="muted">
