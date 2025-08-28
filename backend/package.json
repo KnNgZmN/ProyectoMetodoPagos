@@ -1,32 +1,20 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "Backend con Express, MongoDB Atlas y TypeScript",
   "main": "dist/server.js",
   "scripts": {
-    "dev": "nodemon --watch src --exec ts-node src/server.ts",
     "build": "tsc",
-    "start": "node dist/server.js"
+    "start": "node dist/server.js",
+    "dev": "ts-node-dev --respawn --transpile-only src/server.ts"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "@paypal/checkout-server-sdk": "^1.0.3",
-    "bcryptjs": "^3.0.2",
+    "express": "^5.1.0",
     "cors": "^2.8.5",
-    "dotenv": "^17.2.1",
-    "express": "^4.21.2",
-    "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.18.0"
+    "dotenv": "^16.4.5",
+    "mongoose": "^8.3.1"
   },
   "devDependencies": {
-    "@types/bcryptjs": "^2.4.6",
-    "@types/express": "^5.0.3",
-    "@types/jsonwebtoken": "^9.0.10",
-    "@types/node": "^24.3.0",
-    "nodemon": "^3.1.10",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.9.2"
+    "typescript": "^5.9.2",
+    "ts-node-dev": "^2.0.0"
   }
 }

@@ -1,12 +1,12 @@
 services:
-  # 🚀 Backend (Express + TS)
   - type: web
-    name: backend-pagos
+    name: proyecto-metodo-pagos
     env: node
     plan: free
-    rootDir: backend
-    buildCommand: "npm install && npm run build"
-    startCommand: "npm start"
+    buildCommand: |
+      npm install
+      npm run build
+    startCommand: npm start
     envVars:
       - key: NODE_ENV
         value: production
@@ -17,14 +17,3 @@ services:
       - key: PAYPAL_CLIENT_SECRET
         sync: false
 
-  # 🎨 Frontend (Angular)
-  - type: web
-    name: frontend-pagos
-    env: static
-    plan: free
-    rootDir: .   # 👈 porque Angular está en la raíz
-    buildCommand: "npm install && npm run build -- --configuration production"
-    staticPublishPath: "dist/interfaz-pagos"
-    envVars:
-      - key: NODE_ENV
-        value: production
