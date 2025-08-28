@@ -13,31 +13,33 @@ if (process.env['NODE_ENV'] !== 'production') {
 
 const app = express();
 
-// Si quieres mantener CORS solo para localhost durante desarrollo
+// Middleware para registrar todas las solicitudes (útil para debug)
+app.use((req, res, next) => {
+  console.log(`🛰️  ${req.method} ${req.path}`);
+  next();
+});
 
-const corsOptions: cors.CorsOptions = {
+// ✅ Configuración CORS
+const allowedOrigins = [
+  'http://localhost:4200',
+  'https://proyectometodopagos.onrender.com'
+];
+
+app.use(cors({
   origin: (origin, callback) => {
-    const allowedOrigins = [
-      'http://localhost:4200', // Angular en local
-      'https://proyectometodopagos.onrender.com', // Render (producción)
-    ];
-
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
-      callback(new Error('CORS no permitido'));
+      callback(new Error('❌ CORS no permitido para este origen'));
     }
   },
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   credentials: true,
-  allowedHeaders: ['Content-Type', 'Authorization'],
-};
-
-// ✅ Aplica CORS
-app.use(cors(corsOptions));
-app.options('*', cors(corsOptions));
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 app.use(express.json());
+app.options('*', cors()); // Manejar preflight
 
 // ---------------------
 // 1️⃣ Rutas del backend
