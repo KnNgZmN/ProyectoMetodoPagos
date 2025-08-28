@@ -48,7 +48,7 @@ app.use(express.static(frontendPath));
 
 // Para cualquier ruta que no sea API → devolver Angular
 app.get('*', (req, res) => {
-  res.sendFile(path.join(frontendPath, 'index.html'));
+  res.status(404).send('Ruta no encontrada');
 });
 
 // ---------------------
