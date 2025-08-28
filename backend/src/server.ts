@@ -41,7 +41,7 @@ app.use('/api/auth', authRoutes);
 // ---------------------
 // 2️⃣ Servir Angular
 // ---------------------
-const frontendPath = path.join(__dirname, '../../../dist/interfaz-pagos/browser');
+const frontendPath = path.join(process.cwd(), 'dist/interfaz-pagos/browser');
 
 // Servir archivos estáticos de Angular
 app.use(express.static(frontendPath));
