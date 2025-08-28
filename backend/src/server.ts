@@ -41,7 +41,7 @@ app.use('/api/paypal', pagoRoutes);
 app.use('/api/payments', pagoRoutes);
 app.use('/api/auth', authRoutes);
 
-const PORT = process.env['PORT'] || 8080;
+const PORT = parseInt(process.env['PORT'] || '8080', 10);
 const MONGO_URI = process.env['MONGO_URI']!;
 
 if (!MONGO_URI) {
@@ -52,6 +52,6 @@ if (!MONGO_URI) {
 // Conexión a MongoDB
 connectDB(MONGO_URI);
 
-app.listen(PORT, () =>
-  console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`)
+app.listen(PORT, '0.0.0.0', () =>
+  console.log(`🚀 Servidor corriendo en http://0.0.0.0:${PORT}`)
 );

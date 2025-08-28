@@ -10,23 +10,21 @@ services:
     envVars:
       - key: NODE_ENV
         value: production
-      - key: PORT
-        value: 8080
       - key: MONGO_URI
-        sync: false   # 🔐 Se agregará manualmente en Render Dashboard
+        sync: false
       - key: PAYPAL_CLIENT_ID
-        sync: false   # 🔐 Se agregará manualmente
+        sync: false
       - key: PAYPAL_CLIENT_SECRET
-        sync: false   # 🔐 Se agregará manualmente
+        sync: false
 
   # 🎨 Frontend (Angular)
   - type: web
     name: frontend-pagos
     env: static
     plan: free
-    rootDir: frontend
-    buildCommand: "npm install && npm run build"
-    staticPublishPath: "dist/frontend"
+    rootDir: .   # 👈 porque Angular está en la raíz
+    buildCommand: "npm install && npm run build -- --configuration production"
+    staticPublishPath: "dist/interfaz-pagos"
     envVars:
       - key: NODE_ENV
         value: production
