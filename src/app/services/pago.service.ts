@@ -34,7 +34,7 @@ export class PagoService {
   }
 
   guardarPago(body: any) {
-    return this.http.post<any>(`${this.apiUrl}/paypal`, body);
+    return this.http.post<any>(`${this.apiUrl}/payments`, body);
   }
 
   obtenerPagos(): Observable<any> {
