@@ -7,12 +7,17 @@ import { connectDB } from './config/db';
 import pagoRoutes from './routes/pagoRoutes';
 import authRoutes from './routes/authRoutes';
 
+
 // ⚙️ Cargar variables de entorno
 if (process.env['NODE_ENV'] !== 'production') {
   dotenv.config();
 }
 
 const app = express();
+
+app.get('/', (req, res) => {
+  res.json({ ok: true });
+});
 
 // ✅ Middleware de debugging (útil en Render)
 app.use((req, res, next) => {
