@@ -12,7 +12,7 @@ export class PagoService {
   constructor(private http: HttpClient) { }
 
   crearOrden(monto: number) {
-    return this.http.post<any>(`${this.apiMenu}/paypal/create-order`, { amount: monto });
+    return this.http.post<any>(`${this.apiMenu}/paypal/createOrder`, { amount: monto });
   }
 
   capturarPago(
@@ -23,7 +23,7 @@ export class PagoService {
     producto: string,
     metodo: string
   ): Observable<any> {
-    return this.http.post<any>(`${this.apiMenu}/paypal/capture-order`, {
+    return this.http.post<any>(`${this.apiMenu}/paypal/captureOrder`, {
       orderId,
       usuario,
       nombre,
