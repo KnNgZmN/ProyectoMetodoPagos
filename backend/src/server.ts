@@ -51,6 +51,8 @@ app.use(express.static(frontendPath));
 app.get('*', (req, res) => {
   const indexPath = path.join(frontendPath, 'index.html');
 
+  console.log('Buscando frontend en:', indexPath);
+
   if (fs.existsSync(indexPath)) {
     res.sendFile(indexPath);
   } else {
