@@ -54,16 +54,6 @@ app.use('/api/auth', authRoutes);
 const frontendPath = path.join(process.cwd(), 'dist/interfaz-pagos/browser');
 app.use(express.static(frontendPath));
 
-app.get('*', (req, res) => {
-  const indexPath = path.join(frontendPath, 'index.html');
-
-  if (fs.existsSync(indexPath)) {
-    res.sendFile(indexPath);
-  } else {
-    res.status(404).send('No se encontró el frontend');
-  }
-});
-
 // 🚀 Iniciar servidor
 const PORT = parseInt(process.env['PORT'] || '8080', 10);
 const MONGO_URI = process.env['MONGO_URI'];
@@ -75,6 +65,20 @@ if (!MONGO_URI) {
 
 connectDB(MONGO_URI);
 
+app.get('*', (req, res) => {
+  const indexPath = path.join(frontendPath, 'index.html');
+
+  if (fs.existsSync(indexPath)) {
+    res.sendFile(indexPath);
+  } else {
+    res.status(404).send('No se encontró el frontend');
+  }
+});
+
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`🚀 Servidor en http://0.0.0.0:${PORT}`);
 });
+
+console.log("✅ Rutas cargadas:");
+console.log("/api/auth ->", authRoutes.stack.map(r => r.route?.path));
+console.log("/api/paypal ->", pagoRoutes.stack.map(r => r.route?.path));
