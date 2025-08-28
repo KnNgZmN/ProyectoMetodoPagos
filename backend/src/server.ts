@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import path from 'path';
 import { connectDB } from './config/db';
 import pagoRoutes from './routes/pagoRoutes';
 import authRoutes from './routes/authRoutes';
@@ -11,9 +12,10 @@ if (process.env['NODE_ENV'] !== "production") {
 
 const app = express();
 
+// Si quieres mantener CORS solo para localhost durante desarrollo
 const allowedOrigins = [
-  'http://localhost:4200',
-  'https://proyectometodopagos.onrender.com'
+  'http://localhost:4200', // Angular en local
+  'https://proyectometodopagos.onrender.com' // Render (producción)
 ];
 
 const corsOptions: cors.CorsOptions = {
@@ -23,18 +25,35 @@ const corsOptions: cors.CorsOptions = {
   allowedHeaders: ['Content-Type', 'Authorization']
 };
 
-// ✅ Aplica CORS a todas las rutas
+// ✅ Aplica CORS
 app.use(cors(corsOptions));
-
-// ✅ Maneja preflight (OPTIONS) correctamente
 app.options('*', cors(corsOptions));
 
 app.use(express.json());
 
+// ---------------------
+// 1️⃣ Rutas del backend
+// ---------------------
 app.use('/api/paypal', pagoRoutes);
 app.use('/api/payments', pagoRoutes);
 app.use('/api/auth', authRoutes);
 
+// ---------------------
+// 2️⃣ Servir Angular
+// ---------------------
+const frontendPath = path.join(__dirname, '../frontend/dist/frontend');
+
+// Servir archivos estáticos de Angular
+app.use(express.static(frontendPath));
+
+// Para cualquier ruta que no sea API → devolver Angular
+app.get('*', (req, res) => {
+  res.sendFile(path.join(frontendPath, 'index.html'));
+});
+
+// ---------------------
+// 3️⃣ Configuración servidor
+// ---------------------
 const PORT = parseInt(process.env['PORT'] || '8080', 10);
 const MONGO_URI = process.env['MONGO_URI']!;
 
