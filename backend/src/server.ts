@@ -54,17 +54,6 @@ app.use('/api/auth', authRoutes);
 const frontendPath = path.join(process.cwd(), 'dist/interfaz-pagos/browser');
 app.use(express.static(frontendPath));
 
-// 🚀 Iniciar servidor
-const PORT = parseInt(process.env['PORT'] || '8080', 10);
-const MONGO_URI = process.env['MONGO_URI'];
-
-if (!MONGO_URI) {
-  console.error('❌ No se encontró MONGO_URI');
-  process.exit(1);
-}
-
-connectDB(MONGO_URI);
-
 app.get('*', (req, res) => {
   const indexPath = path.join(frontendPath, 'index.html');
 
@@ -74,6 +63,16 @@ app.get('*', (req, res) => {
     res.status(404).send('No se encontró el frontend');
   }
 });
+
+// 🚀 Iniciar servidor
+const PORT = parseInt(process.env['PORT'] || '8080', 10);
+const MONGO_URI = process.env['MONGO_URI'];
+
+if (!MONGO_URI) {
+  console.error('❌ No se encontró MONGO_URI');
+  process.exit(1);
+}
+connectDB(MONGO_URI);
 
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`🚀 Servidor en http://0.0.0.0:${PORT}`);
