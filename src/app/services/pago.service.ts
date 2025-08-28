@@ -7,12 +7,12 @@ import { environment } from '../../environments/environment';
   providedIn: 'root',
 })
 export class PagoService {
-  private apiUrl = environment.apiUrl; // Node + TS + Atlas
+  private apiMenu = environment.apiMenu; // Node + TS + Atlas
 
   constructor(private http: HttpClient) { }
 
   crearOrden(monto: number) {
-    return this.http.post<any>(`${this.apiUrl}/paypal/create-order`, { amount: monto });
+    return this.http.post<any>(`${this.apiMenu}/paypal/create-order`, { amount: monto });
   }
 
   capturarPago(
@@ -23,7 +23,7 @@ export class PagoService {
     producto: string,
     metodo: string
   ): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/paypal/capture-order`, {
+    return this.http.post<any>(`${this.apiMenu}/paypal/capture-order`, {
       orderId,
       usuario,
       nombre,
@@ -34,10 +34,10 @@ export class PagoService {
   }
 
   guardarPago(body: any) {
-    return this.http.post<any>(`${this.apiUrl}/payments`, body);
+    return this.http.post<any>(`${this.apiMenu}/payments`, body);
   }
 
   obtenerPagos(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/payments`);
+    return this.http.get(`${this.apiMenu}/payments`);
   }
 }
