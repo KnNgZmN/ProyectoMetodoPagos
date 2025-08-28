@@ -7,23 +7,30 @@ import pagoRoutes from './routes/pagoRoutes';
 import authRoutes from './routes/authRoutes';
 import fs from 'fs';
 
-if (process.env['NODE_ENV'] !== "production") {
-  require("dotenv").config();
+if (process.env['NODE_ENV'] !== 'production') {
+  require('dotenv').config();
 }
 
 const app = express();
 
 // Si quieres mantener CORS solo para localhost durante desarrollo
-const allowedOrigins = [
-  'http://localhost:4200', // Angular en local
-  'https://proyectometodopagos.onrender.com' // Render (producción)
-];
 
 const corsOptions: cors.CorsOptions = {
-  origin: allowedOrigins,
+  origin: (origin, callback) => {
+    const allowedOrigins = [
+      'http://localhost:4200', // Angular en local
+      'https://proyectometodopagos.onrender.com', // Render (producción)
+    ];
+
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('CORS no permitido'));
+    }
+  },
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   credentials: true,
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type', 'Authorization'],
 };
 
 // ✅ Aplica CORS
@@ -67,7 +74,9 @@ const PORT = parseInt(process.env['PORT'] || '8080', 10);
 const MONGO_URI = process.env['MONGO_URI']!;
 
 if (!MONGO_URI) {
-  console.error("❌ Error: No se encontró MONGO_URI en las variables de entorno");
+  console.error(
+    '❌ Error: No se encontró MONGO_URI en las variables de entorno'
+  );
   process.exit(1);
 }
 
