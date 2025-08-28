@@ -15,10 +15,6 @@ if (process.env['NODE_ENV'] !== 'production') {
 
 const app = express();
 
-app.get('/', (req, res) => {
-  res.json({ ok: true });
-});
-
 // ✅ Middleware de debugging (útil en Render)
 app.use((req, res, next) => {
   console.log(`[${req.method}] ${req.path}`);
