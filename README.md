@@ -1,59 +1,100 @@
-# InterfazPagos
+# 💳 Interfaz de Pagos — Proyecto Académico en Angular
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.2.0.
+![Angular](https://img.shields.io/badge/Angular-20.2.0-DD0031?style=for-the-badge&logo=angular)
+![MongoDB](https://img.shields.io/badge/MongoDB-Connected-47A248?style=for-the-badge&logo=mongodb)
+![Render](https://img.shields.io/badge/Deployed%20on-Render-blue?style=for-the-badge)
+![License](https://img.shields.io/badge/License-MIT-lightgrey?style=for-the-badge)
 
-## Development server
+## 🧩 Descripción
 
-To start a local development server, run:
+**InterfazPagos** es una aplicación web desarrollada con **Angular** que **simula el flujo completo de pagos en línea** a través de diferentes pasarelas, incluyendo:
 
-```bash
+- 💰 **PayPal**
+- 💳 **Tarjeta de Crédito**
+- 💳 **Tarjeta de Débito**
+
+El sistema se conecta con **MongoDB** para registrar y consultar toda la actividad de las transacciones, manteniendo trazabilidad de cada pago realizado.  
+El proyecto fue **desplegado en Render** como parte de un **proyecto académico**, enfocándose en la integración front-end con bases de datos y servicios simulados.
+
+---
+
+## 🚀 Tecnologías utilizadas
+
+- **Angular 20.2.0**
+- **Node.js / Express (API simulada)**
+- **MongoDB (base de datos para registro de transacciones)**
+- **TypeScript**
+- **HTML5 / CSS3 / Bootstrap**
+- **Render (despliegue en la nube)**
+
+---
+
+## ⚙️ Instalación y ejecución
+
+1️⃣ Clonar el repositorio
+git clone https://github.com/tuusuario/InterfazPagos.git
+cd InterfazPagos
+
+2️⃣ Instalar dependencias
+npm install
+
+3️⃣ Ejecutar el servidor de desarrollo
 ng serve
-```
+Luego abre tu navegador en 👉 http://localhost:4200
+La aplicación se recargará automáticamente al detectar cambios en el código fuente.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+🧠 Funcionalidades principales
 
-## Code scaffolding
+💵 Simulación de pagos
+Procesamiento de pagos con PayPal, tarjeta de crédito y tarjeta de débito.
+Validación de datos del usuario y del método de pago.
+Confirmación y resumen de la transacción.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+📊 Gestión de transacciones
+Registro automático de cada pago en MongoDB.
+Listado de historial de transacciones.
+Búsqueda y filtrado por tipo de pago o estado.
 
-```bash
-ng generate component component-name
-```
+☁️ Despliegue
+Aplicación desplegada en Render con configuración optimizada para producción.
+Conexión persistente a base de datos MongoDB en la nube.
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+🧪 Testing
 
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
+Unit Tests
+Ejecuta las pruebas unitarias con Karma:
 ng test
-```
 
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
+End-to-End Tests
+Ejecuta pruebas de integración (e2e):
 ng e2e
-```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
 
-## Additional Resources
+📦 InterfazPagos/
+├── 📂 src/
+│   ├── 📂 app/
+│   │   ├── components/       # Componentes de la interfaz (pago, resumen, historial, etc.)
+│   │   ├── services/         # Servicios HTTP y conexión con MongoDB
+│   │   └── models/           # Modelos de datos (Transacción, Usuario, Método de pago)
+│   ├── assets/               # Recursos estáticos
+│   └── environments/         # Configuraciones (dev / prod)
+├── angular.json
+├── package.json
+└── README.md
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+🎯 Objetivos Académicos
+
+✔️ Comprender la integración de front-end Angular con bases de datos no relacionales (MongoDB).
+✔️ Simular flujos de pago reales mediante pasarelas digitales.
+✔️ Implementar un flujo de transacciones con almacenamiento persistente.
+✔️ Desplegar una aplicación Angular funcional en Render.
+
+👩‍💻 Autores
+
+Alejandra Toro - Kevin Guzman
+📚 Proyecto académico — Universitaria de Colombia / Ingenieria de Software / 2025
+
+📜 Licencia
+
+Este proyecto se distribuye bajo la licencia MIT.
+Consulta el archivo LICENSE para más información.
